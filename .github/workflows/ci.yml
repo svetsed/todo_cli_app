@@ -37,7 +37,7 @@ jobs:
         run: go test ./... -v
 
       - name: Build binary
-        run: go build -o todo ./cmd/todo
+        run: go build -o todo main.go
 
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v4
