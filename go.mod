@@ -1,6 +1,6 @@
 module github.com/svetsed/todo_cli_app
 
-go 1.22.2
+go 1.22
 
 require github.com/spf13/cobra v1.9.1
 
