@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/gofrs/flock"
+	"github.com/svetsed/todo_cli_app/internal/logger"
 )
 
 func Save(filename string, data any) error {
@@ -19,7 +20,11 @@ func Save(filename string, data any) error {
 	if !locked {
 		return fmt.Errorf("file is locked by another process")
 	}
-	defer lock.Unlock()
+	defer func() {
+		if err := lock.Unlock(); err != nil {
+			logger.Error("failed to unlock: %w", err)
+		}
+	}()
 
 	fileData, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
@@ -46,7 +51,11 @@ func Load(filename string, data any) error {
 		return fmt.Errorf("file is locked by another process")
 	}
 
-	defer lock.Unlock()
+	defer func() {
+		if err := lock.Unlock(); err != nil {
+			logger.Error("failed to unlock: %w", err)
+		}
+	}()
 
 	fileData, err := os.ReadFile(filename)
 	if err != nil {

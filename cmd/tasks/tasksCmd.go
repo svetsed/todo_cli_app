@@ -135,7 +135,7 @@ func CompleteCmd(cfg *config.Config) *cobra.Command {
 
 			if forceFlag && !deleteFlag {
 				logger.Error("incorrect using flags", fmt.Errorf("flag -f can only be used with -d"))
-				cmd.Usage()
+				_ = cmd.Usage()
 				return
 			}
 
